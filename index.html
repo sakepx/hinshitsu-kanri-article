@@ -219,7 +219,46 @@
     color: #ff6b6b;
   }
 
+  /* 目次（TOC） */
+  .toc {
+    position: fixed;
+    top: 80px;
+    left: max(16px, calc((100vw - 620px) / 2 - 260px));
+    width: 220px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .toc-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+  }
+  .toc a {
+    display: block;
+    padding: 4px 0 4px 12px;
+    color: #999;
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .toc a:hover {
+    color: #333;
+  }
+  .toc a.active {
+    color: #41c9b4;
+    border-left-color: #41c9b4;
+    font-weight: 700;
+  }
+
   /* レスポンシブ */
+  @media (max-width: 1100px) {
+    .toc { display: none; }
+  }
   @media (max-width: 680px) {
     .hero h1 { font-size: 22px; }
     h2 { font-size: 19px; }
@@ -242,6 +281,20 @@
   <h1>プログラミング未経験の製造現場の人間が、<br>AIと品質管理システムを作った話</h1>
 </div>
 
+<nav class="toc">
+  <div class="toc-title">目次</div>
+  <a href="#sec-intro">はじめに</a>
+  <a href="#sec-why">なぜ作ろうと思ったか</a>
+  <a href="#sec-dx">「DX」という言葉の先走り</a>
+  <a href="#sec-impulse">「自分で作れたら」という衝動</a>
+  <a href="#sec-ai">AIは「万能の魔法使い」ではなかった</a>
+  <a href="#sec-pdca">PDCAを127回、回した</a>
+  <a href="#sec-struggle">「これ無理かも」と「AIのせい」</a>
+  <a href="#sec-results">あの問題が、どう変わったか</a>
+  <a href="#sec-changed">この経験で変わったこと</a>
+  <a href="#sec-closing">おわりに</a>
+</nav>
+
 <article class="article-container">
 
   <div class="author">
@@ -252,7 +305,7 @@
     </div>
   </div>
 
-  <h2>はじめに</h2>
+  <h2 id="sec-intro">はじめに</h2>
 
   <p>私は製造現場で働いている。プログラミングの経験はない。</p>
 
@@ -264,7 +317,7 @@
 
   <hr>
 
-  <h2>なぜ作ろうと思ったか</h2>
+  <h2 id="sec-why">なぜ作ろうと思ったか</h2>
 
   <p>きっかけは朝礼だった。</p>
 
@@ -280,7 +333,7 @@
 
   <hr>
 
-  <h2>「DX」という言葉の先走り</h2>
+  <h2 id="sec-dx">「DX」という言葉の先走り</h2>
 
   <p>最近は社内にもデジタル化の波が来ていて、設備の測定値がサーバーに上がるようになった。画面上でリアルタイムにデータが見える。</p>
 
@@ -300,7 +353,7 @@
 
   <hr>
 
-  <h2>「自分で作れたら」という衝動</h2>
+  <h2 id="sec-impulse">「自分で作れたら」という衝動</h2>
 
   <p>じゃあベンダーにシステムを頼めばいいじゃないか、という話になるが、ここに二つの壁がある。</p>
 
@@ -324,7 +377,7 @@
 
   <hr>
 
-  <h2>AIは「万能の魔法使い」ではなかった</h2>
+  <h2 id="sec-ai">AIは「万能の魔法使い」ではなかった</h2>
 
   <p>使ったのはClaude Code（クロードコード）というAIツールだ。チャットで「こういうものが欲しい」と伝えると、AIがコードを書いてくれる。</p>
 
@@ -346,7 +399,7 @@
 
   <hr>
 
-  <h2>PDCAを127回、回した</h2>
+  <h2 id="sec-pdca">PDCAを127回、回した</h2>
 
   <p>一度のやりとりで完成しないとわかった私は、自分が一番よく知っているやり方を持ち込んだ。</p>
 
@@ -375,7 +428,7 @@
 
   <hr>
 
-  <h2>「これ無理かも」と「AIのせい」</h2>
+  <h2 id="sec-struggle">「これ無理かも」と「AIのせい」</h2>
 
   <p>順調だったわけではない。</p>
 
@@ -399,7 +452,7 @@
 
   <hr>
 
-  <h2>あの問題が、どう変わったか</h2>
+  <h2 id="sec-results">あの問題が、どう変わったか</h2>
 
   <p>「特にありません」で終わっていた朝礼。画面を開くだけで、今日どの設備に注目すべきかが信号機の赤・黄・緑で一目でわかるようになった。注目ポイントも自動で出る。もう「何を話すか」を考える必要がない。</p>
 
@@ -442,7 +495,7 @@
 
   <hr>
 
-  <h2>この経験で変わったこと</h2>
+  <h2 id="sec-changed">この経験で変わったこと</h2>
 
   <h3>開発者の仕事を、ようやく理解した</h3>
 
@@ -472,7 +525,7 @@
 
   <hr>
 
-  <h2>おわりに</h2>
+  <h2 id="sec-closing">おわりに</h2>
 
   <p>プログラミングができなくても、ドメイン知識があればシステムは作れる——そんな時代がもう来ている。</p>
 
@@ -505,5 +558,38 @@
   <button class="like-btn">&#x2764;&#xfe0e; スキ</button>
 </div>
 
+<script>
+// 目次のスクロール追従ハイライト
+(function() {
+  const tocLinks = document.querySelectorAll('.toc a');
+  const sections = Array.from(tocLinks).map(a => {
+    const id = a.getAttribute('href').slice(1);
+    return document.getElementById(id);
+  }).filter(Boolean);
+
+  function updateActive() {
+    const scrollY = window.scrollY + 120;
+    let current = sections[0];
+    for (const section of sections) {
+      if (section.offsetTop <= scrollY) current = section;
+    }
+    tocLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current.id);
+    });
+  }
+
+  window.addEventListener('scroll', updateActive, { passive: true });
+  updateActive();
+
+  // スムーススクロール
+  tocLinks.forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.getElementById(a.getAttribute('href').slice(1));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+})();
+</script>
 </body>
 </html>

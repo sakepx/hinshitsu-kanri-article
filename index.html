@@ -219,21 +219,32 @@
     color: #ff6b6b;
   }
 
+  /* 記事 + TOC のラッパー */
+  .article-with-toc {
+    position: relative;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+
   /* 目次（TOC） */
   .toc {
-    position: fixed;
-    top: 220px;
-    left: 24px;
-    right: calc(50% + 330px);
-    min-width: 160px;
-    max-height: calc(100vh - 120px);
-    overflow-y: auto;
+    position: absolute;
+    top: 0;
+    right: calc(100% + 32px);
+    width: max(180px, calc((100vw - 620px) / 2 - 56px));
+    max-width: 280px;
     font-size: 13px;
     line-height: 1.6;
     background: rgba(255, 255, 255, 0.92);
     backdrop-filter: blur(8px);
     padding: 16px;
     border-radius: 8px;
+  }
+  .toc.is-sticky {
+    position: fixed;
+    top: 64px;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
   }
   .toc-title {
     font-size: 12px;
@@ -285,7 +296,9 @@
   <h1>プログラミング未経験の製造現場の人間が、<br>AIと品質管理システムを作った話</h1>
 </div>
 
-<nav class="toc">
+<div class="article-with-toc">
+
+<nav class="toc" id="toc">
   <div class="toc-title">目次</div>
   <a href="#sec-intro">はじめに</a>
   <a href="#sec-why">なぜ作ろうと思ったか</a>
@@ -301,7 +314,7 @@
 
 <article class="article-container">
 
-  <div class="author">
+  <div class="author" id="toc-anchor">
     <div class="author-avatar">S</div>
     <div class="author-info">
       <span class="author-name">sakep</span>
@@ -558,18 +571,42 @@
 
 </article>
 
+</div><!-- .article-with-toc -->
+
 <div class="like-bar">
   <button class="like-btn">&#x2764;&#xfe0e; スキ</button>
 </div>
 
 <script>
-// 目次のスクロール追従ハイライト
 (function() {
+  const toc = document.getElementById('toc');
+  const anchor = document.getElementById('toc-anchor');
   const tocLinks = document.querySelectorAll('.toc a');
   const sections = Array.from(tocLinks).map(a => {
     const id = a.getAttribute('href').slice(1);
     return document.getElementById(id);
   }).filter(Boolean);
+
+  // TOC の sticky 位置を計算するための初期 left を記録
+  let tocLeft = null;
+  let tocWidth = null;
+
+  function updateSticky() {
+    const anchorRect = anchor.getBoundingClientRect();
+    if (anchorRect.top <= 64) {
+      if (!toc.classList.contains('is-sticky')) {
+        tocLeft = toc.getBoundingClientRect().left;
+        tocWidth = toc.getBoundingClientRect().width;
+      }
+      toc.classList.add('is-sticky');
+      toc.style.left = tocLeft + 'px';
+      toc.style.width = tocWidth + 'px';
+    } else {
+      toc.classList.remove('is-sticky');
+      toc.style.left = '';
+      toc.style.width = '';
+    }
+  }
 
   function updateActive() {
     const scrollY = window.scrollY + 120;
@@ -582,8 +619,19 @@
     });
   }
 
-  window.addEventListener('scroll', updateActive, { passive: true });
-  updateActive();
+  function onScroll() {
+    updateSticky();
+    updateActive();
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', () => {
+    toc.classList.remove('is-sticky');
+    toc.style.left = '';
+    toc.style.width = '';
+    onScroll();
+  });
+  onScroll();
 
   // スムーススクロール
   tocLinks.forEach(a => {

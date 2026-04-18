@@ -4,6 +4,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>プログラミング未経験の製造現場の人間が、AIと品質管理システムを作った話</title>
+<meta name="description" content="プログラミング未経験の製造現場の人間が、AIと品質管理システムを作った話。SvelteKit + Supabase で 132 回の PDCA サイクルを回した開発記録。">
+<link rel="canonical" href="https://sakepx.github.io/hinshitsu-kanri-article/">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="hinshitsu-kanri-article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="プログラミング未経験の製造現場の人間が、AIと品質管理システムを作った話">
+<meta property="og:description" content="SvelteKit + Supabase で 132 回の PDCA サイクルを回した、製造現場の品質管理システム開発記録。">
+<meta property="og:url" content="https://sakepx.github.io/hinshitsu-kanri-article/">
+<meta property="og:image" content="https://sakepx.github.io/hinshitsu-kanri-article/01-briefing-light.png">
+<meta property="og:image:width" content="2880">
+<meta property="og:image:height" content="1800">
+<meta property="og:image:alt" content="朝礼ダッシュボード — 信号機方式で全設備の状態を一覧表示">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="プログラミング未経験の製造現場の人間が、AIと品質管理システムを作った話">
+<meta name="twitter:description" content="SvelteKit + Supabase で 132 回の PDCA サイクルを回した、製造現場の品質管理システム開発記録。">
+<meta name="twitter:image" content="https://sakepx.github.io/hinshitsu-kanri-article/01-briefing-light.png">
+
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
 
@@ -87,7 +106,7 @@
   }
   .author-info { display: flex; flex-direction: column; gap: 2px; }
   .author-name { font-weight: 700; font-size: 15px; }
-  .author-date { font-size: 13px; color: #999; }
+  .author-date { font-size: 13px; color: #767676; }
 
   /* 見出し */
   h2 {
@@ -133,12 +152,13 @@
   .article-image img {
     max-width: calc(100% + 40px);
     width: calc(100% + 40px);
+    height: auto;
     border-radius: 8px;
     box-shadow: 0 2px 16px rgba(0,0,0,0.1);
   }
   .article-image figcaption {
     font-size: 13px;
-    color: #999;
+    color: #767676;
     margin-top: 8px;
     padding: 0 20px;
   }
@@ -249,14 +269,14 @@
   .toc-title {
     font-size: 12px;
     font-weight: 700;
-    color: #999;
+    color: #767676;
     letter-spacing: 0.5px;
     margin-bottom: 12px;
   }
   .toc a {
     display: block;
     padding: 4px 0 4px 12px;
-    color: #999;
+    color: #767676;
     text-decoration: none;
     border-left: 2px solid transparent;
     transition: all 0.2s;
@@ -474,21 +494,21 @@
   <p>「特にありません」で終わっていた朝礼。画面を開くだけで、今日どの設備に注目すべきかが信号機の赤・黄・緑で一目でわかるようになった。注目ポイントも自動で出る。もう「何を話すか」を考える必要がない。</p>
 
   <figure class="article-image">
-    <img src="01-briefing-light.png" alt="朝礼ダッシュボード">
+    <img src="01-briefing-light.png" alt="朝礼ダッシュボード" width="2880" height="1800" loading="eager" fetchpriority="high">
     <figcaption>朝礼ダッシュボード — 信号機方式で全設備の状態を一覧表示</figcaption>
   </figure>
 
   <p>ギザギザにしか見えなかった生データ。管理図を通せば、管理限界線とトレンドが見える。外れ値に飛びつくのではなく、「いつもと違うのかどうか」を統計的に判定できるようになった。</p>
 
   <figure class="article-image">
-    <img src="03-spc-chart-light.png" alt="X-bar管理図">
+    <img src="03-spc-chart-light.png" alt="X-bar管理図" width="2880" height="1800" loading="lazy">
     <figcaption>X-bar管理図 — 管理限界線とトレンドで「いつもと違う」を判定</figcaption>
   </figure>
 
   <p>その判定結果を、本当に対応すべきものだけ3段階で通知する。「今日のこれは騒ぐべきか？」の答えを、システムが出してくれる。</p>
 
   <figure class="article-image">
-    <img src="05-alerts-light.png" alt="アラート3階層">
+    <img src="05-alerts-light.png" alt="アラート3階層" width="2880" height="1800" loading="lazy">
     <figcaption>アラート3階層 — 即対応・傾向注意・自動記録に自動分類</figcaption>
   </figure>
 
@@ -497,14 +517,14 @@
   <p>「どうしていいかわからない」状態。異常が出たら「次に何をすべきか」をAIが過去の対応実績から提案してくれるようにした。人間は提案を見て判断するだけでいい。</p>
 
   <figure class="article-image">
-    <img src="04-spc-light.png" alt="品質モニタリング">
+    <img src="04-spc-light.png" alt="品質モニタリング" width="2880" height="1800" loading="lazy">
     <figcaption>品質モニタリング — 設備ごとの工程能力と異常状態を一覧</figcaption>
   </figure>
 
   <p>全部で72画面、1,168件のテスト、47のデータベーステーブル。個人で作ったにしては、それなりの規模になった。ダークモードにも対応している。</p>
 
   <figure class="article-image">
-    <img src="06-briefing-dark.png" alt="朝礼ダッシュボード（ダークモード）">
+    <img src="06-briefing-dark.png" alt="朝礼ダッシュボード（ダークモード）" width="2880" height="1800" loading="lazy">
     <figcaption>朝礼ダッシュボード（ダークモード）</figcaption>
   </figure>
 
@@ -556,7 +576,7 @@
 
   <p class="closing-line">PDCAを回せる人なら、システムも作れる。</p>
 
-  <p id="fn1" style="font-size: 13px; color: #999; margin-top: 32px;">[1] 経済産業省「デジタルガバナンス・コード3.0 ～DX経営による企業価値向上に向けて～」（2024年9月改訂）</p>
+  <p id="fn1" style="font-size: 13px; color: #767676; margin-top: 32px;">[1] 経済産業省「デジタルガバナンス・コード3.0 ～DX経営による企業価値向上に向けて～」（2024年9月改訂）</p>
 
   <div class="article-footer">
     <a class="tag" href="#">#製造業</a>
@@ -630,7 +650,7 @@
     toc.style.left = '';
     toc.style.width = '';
     onScroll();
-  });
+  }, { passive: true });
   onScroll();
 
   // スムーススクロール
